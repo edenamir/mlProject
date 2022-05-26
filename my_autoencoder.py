@@ -68,8 +68,8 @@ class autoencoder(nn.Module):
         for layer in list(ptm):
             if isinstance(layer, nn.Conv2d):
                 print( i, '/', len(th_cfg), ':', th_cfg[i])
-                layer.weight = th.nn.Parameter(thm.get(th_cfg[i]).weight.float())
-                layer.bias = th.nn.Parameter(thm.get(th_cfg[i]).bias.float())
+                layer.weight = th.nn.Parameter(th.from_numpy(thm.modules[th_cfg[i]].weight.astype(float)))
+                layer.bias = th.nn.Parameter(th.from_numpy(thm.modules[th_cfg[i]].bias.astype(float)))
                 i += 1
         print ('wct load torch #convs', len(th_cfg), i)
 
@@ -85,8 +85,8 @@ class autoencoder(nn.Module):
         for layer in list(ptm):
             if isinstance(layer, nn.Conv2d):
                 print( i, '/', len(aux_cfg), ':', aux_cfg[i])
-                layer.weight = th.nn.Parameter(thm.get(aux_cfg[i]).weight.float())
-                layer.bias = th.nn.Parameter(thm.get(aux_cfg[i]).bias.float())
+                layer.weight = th.nn.Parameter(th.from_numpy(thm.modules[aux_cfg[i]].weight.astype(float)))
+                layer.bias = th.nn.Parameter(th.from_numpy(thm.modules[aux_cfg[i]].bias.astype(float)))
                 i += 1
         print( 'wct load aux torch #convs', len(th_cfg), '-', len(aux_cfg), i)
 
